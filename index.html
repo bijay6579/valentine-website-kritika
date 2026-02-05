@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kritika, Will You Be My Valentine?</title>
+<style>
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
+font-family:Arial, sans-serif;
+overflow:hidden;
+}
+
+.rose{
+position:absolute;
+font-size:22px;
+animation:fall 6s linear infinite;
+}
+
+@keyframes fall{
+from{transform:translateY(-10vh);} 
+to{transform:translateY(110vh);} 
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,0.25);
+width:90%;
+max-width:320px;
+}
+
+img{
+width:120px;
+height:120px;
+border-radius:50%;
+border:4px solid #ff4b6e;
+object-fit:cover;
+margin-bottom:10px;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1);} 
+50%{transform:scale(1.08);} 
+100%{transform:scale(1);} 
+}
+
+h1{color:#ff4b6e;font-size:24px;}
+p{color:#555;font-size:16px;margin-bottom:15px;}
+
+.buttons{position:relative;height:80px;margin-top:10px;}
+
+button{
+padding:12px 22px;
+font-size:16px;
+border:none;
+border-radius:25px;
+cursor:pointer;
+}
+
+#yes{background:#ff4b6e;color:white;}
+#no{background:#ddd;position:absolute;}
+
+.love{
+display:none;
+font-size:24px;
+color:#ff4b6e;
+margin-top:15px;
+}
+
+.fullscreen{
+position:fixed;
+inset:0;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:10;
+}
+
+.fullscreen img{
+width:90%;
+height:auto;
+border-radius:20px;
+animation:none;
+}
+</style>
+</head>
+<body>
+
+<div class="card" id="card">
+<img src="photo.jpg" id="mainPhoto">
+<h1 id="question">Will you be my Valentine forever? 💕</h1>
+
+<div class="buttons">
+<button id="yes">Yes 😍</button>
+<button id="no">No 🙈</button>
+</div>
+
+<div class="love" id="loveMsg">I love you Kritika 💖 Forever & Always</div>
+</div>
+
+<script>
+const questions=[
+"Will you be my Valentine forever? 💕",
+"Are you sure you don't want to be my Valentine? 🥺",
+"Pleaseee be my Valentine 💖",
+"I promise I'll make you smile everyday 😘",
+"Okay last time... be mine? 💞"
+];
+let i=0;
+
+const q=document.getElementById("question");
+const noBtn=document.getElementById("no");
+const yesBtn=document.getElementById("yes");
+const love=document.getElementById("loveMsg");
+const card=document.getElementById("card");
+const photo=document.getElementById("mainPhoto");
+
+noBtn.onclick=next;
+noBtn.ontouchstart=next;
+
+function next(){
+i=(i+1)%questions.length;
+q.textContent=questions[i];
+noBtn.style.left=Math.random()*(window.innerWidth-100)+"px";
+noBtn.style.top=Math.random()*(window.innerHeight-100)+"px";
+}
+
+yesBtn.onclick=()=>{
+q.style.display=noBtn.style.display=yesBtn.style.display="none";
+love.style.display="block";
+
+const fs=document.createElement("div");
+fs.className="fullscreen";
+const big=document.createElement("img");
+big.src="photo.jpg";
+fs.appendChild(big);
+document.body.appendChild(fs);
+
+setInterval(createRose,300);
+};
+
+function createRose(){
+const r=document.createElement("div");
+r.className="rose";
+r.innerHTML="🌹";
+r.style.left=Math.random()*100+"vw";
+r.style.animationDuration=(Math.random()*3+3)+"s";
+document.body.appendChild(r);
+setTimeout(()=>r.remove(),6000);
+}
+</script>
+
+</body>
+</html>
